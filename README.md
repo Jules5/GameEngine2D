@@ -2,17 +2,17 @@
 
 ## Installation
 
-make install 
-make init
+	make install 
+	make init
 
-## Contenu
+## Content
 
 * src : source code
 * include : headers
 * lib : externals libs
 * obj : binaries
 
-## Utilisation
+## Use
 
 * make : compilation + execution
 * make install : install dependencies
