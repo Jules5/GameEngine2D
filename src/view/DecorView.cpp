@@ -2,15 +2,14 @@
 
 
 DecorView::DecorView()
-:target(NULL)
+:PhysicObjectView()
 {
 	init();
 }
 
 
-
 DecorView::DecorView(Decor* d)
-:target(d)
+:PhysicObjectView(d)
 {	
 	init();
 }
@@ -28,20 +27,13 @@ void DecorView::init()
 
 
 
-void DecorView::update()
-{
-	body.setSize(Vector2f(target->size.x,target->size.y));
-	body.setPosition(Vector2f(target->position.x,target->position.y));
 
+
+void DecorView::update(RenderWindow* window)
+{
 	// Parallaxe
 	IntRect rect = body.getTextureRect();
-	rect.left = target->dx;
+	rect.left = ((Decor*)target)->getDeltaX();
 	body.setTextureRect(rect);
-}
 
-
-
-void DecorView::display(RenderWindow* window)
-{
-	window->draw(body);
-}
+	PhysicObjectView::update(window);}

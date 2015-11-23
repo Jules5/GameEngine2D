@@ -1,7 +1,7 @@
 #include "model/Decor.h"
 
 Decor::Decor(Int2 pos, Int2 siz, int z, int dx)
-:ObjetPhysique(pos,siz),z(z),dx(dx)
+:PhysicObject(pos,siz),z(z),dx(dx)
 {
 	if(z==0)
 		this->z = -1;
@@ -10,7 +10,7 @@ Decor::Decor(Int2 pos, Int2 siz, int z, int dx)
 
 
 Decor::Decor()
-:ObjetPhysique()
+:PhysicObject()
 {
 	z = -1;
 }

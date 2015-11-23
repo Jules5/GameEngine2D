@@ -14,7 +14,10 @@
 #include <iostream>
 #include <sstream>
 
+#include <SFML/System.hpp>
+
 using namespace std;
+using namespace sf;
 
 
 /***
@@ -58,7 +61,7 @@ class Int2 {
 		{
 			os << "(" << i.x << "," << i.y << ")";
 			return os; 
-		};  
+		}; 
 };	
 
 
@@ -78,7 +81,7 @@ class Float2 {
 		float x; /*!< \brief Float 1 */
 		float y; /*!< \brief Float 2 */
 		
-		Float2(float i=0,float j=0); /*!< \brief Constructeur */
+		Float2(float i=0, float j=0); /*!< \brief Constructeur */
 		Float2(const Float2& u); /*!< \brief Constructeur par copie */
 		Float2(const Int2& u); /*!< \brief Construction à partir d'un Int2 */
 		~Float2(); /*!< \brief Destructeur */
@@ -91,6 +94,13 @@ class Float2 {
 			os << "(" << i.x << "," << i.y << ")";
 			return os; 
 		};  
+
+		
+		// Seulement pour SFML
+		inline const Vector2f vector() const
+		{
+			return Vector2f(x,y);
+		}
 };	
 
 
@@ -122,8 +132,6 @@ class Bool2 {
 			return os; 
 		};  
 };	
-
-
 
 
 /** @}*/

@@ -27,6 +27,8 @@ void Game::init()
 
     level.environment.addDecor(Int2(0,0),Int2(WIDTH,HEIGHT),0,view.getCenter().x);
     level.environment.addPlatform(Int2(0,HEIGHT-50),Int2(WIDTH,50),0);
+
+    level_view = LevelView(&level);
 }
 
 
@@ -46,26 +48,25 @@ void Game::setConfig(Config* c)
 
 void Game::update(int dt)
 {
-    level.environment.update(view.getCenter().x-view.getSize().x/2);
-
+    // Mise à jour du modèle
+    // level.environment.update(view.getCenter().x-view.getSize().x/2);
     player.animate(dt);
+
+    // Calcul des collisions
     checkCollisions();
-    player_view.update();
-}
 
-
-void Game::display()
-{
-    level.environment.display(window);
-
-    player_view.display(window);
+    // Mise à jour des vues
+    level_view.update(window);
+    player_view.update(window);
 }
 
 
 
 void Game::checkCollisions()
 {
-    // Joueur / Platform
-    for(list<Platform>::iterator it = level.environment.platforms.begin(); it != level.environment.platforms.end(); it++)
-        player.checkCollisions((ObjetPhysique*)&*it);
+    const list<Platform>* platforms = level.environment.getPlatforms();
+
+    // Player / Platform
+    for(list<Platform>::const_iterator it = platforms->begin(); it != platforms->end(); it++)
+        player.checkCollisions((PhysicObject*)&*it);
 }

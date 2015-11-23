@@ -2,14 +2,14 @@
 
 
 CharacterView::CharacterView()
-:target(NULL)
+:PhysicObjectView()
 {
 	init();
 }
 
 
 CharacterView::CharacterView(Character* c)
-:target(c)
+:PhysicObjectView(c)
 {
 	init();
 }
@@ -26,15 +26,9 @@ void CharacterView::init()
 }
 
 
-void CharacterView::update()
+
+
+void CharacterView::update(RenderWindow* window)
 {
-	body.setSize(Vector2f(target->size.x,target->size.y));
-	body.setPosition(Vector2f(target->position.x,target->position.y));
-}
-
-
-
-void CharacterView::display(RenderWindow* window)
-{
-	window->draw(body);
+	PhysicObjectView::update(window);
 }

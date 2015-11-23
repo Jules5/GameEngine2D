@@ -1,83 +1,31 @@
 #ifndef PLATFORM_H
 #define PLATFORM_H
 
-/*!
- * \file Platform.h
- * \author Jules
- * \brief Déclaration de la classe Platform
- * \addtogroup Model 
- * @{
- */
-
 #include <iostream>
 #include <sstream>
 
-#include <model/ObjetPhysique.h>
+#include <model/PhysicObject.h>
 
 using namespace std;
 
 
-
-/*!\class Platform
- * \brief Modélise une plate-forme.
- *
- * C'est un objet simple servant de sol pour les autres objets.
- * Il n'est pas soumis à la gravité.
- */
-class Platform : public ObjetPhysique
+class Platform : public PhysicObject
 {
-	friend class PlatformView;
-	
-	protected :
-
-		int walkline; /*!< \brief Hauteur du sol de la plate-forme. */
-		bool visible; /*!< \brief Indique si la plateforme est visible ou non. */
+	private :
+		int walkline; 
+		bool visibility; 
 
 
 	public :
-
-		/*!
-	     * \brief Constructeur
-	     *
-	     * Constructeur de la classe Platform.
-	     * \param pos : Position de la plate-forme.
-	     * \param siz : Taille de la plate-forme.
-	     * \param walkline : Hauteur du sol de la plate-forme.
-	     */
-		Platform(Int2 pos, Int2 siz, int walkline=0);
-
-		/*!
-	     * \brief Constructeur
-	     *
-	     * Constructeur par défaut de la classe Platform
-	     */
+		Platform(Int2 pos, Int2 siz, int wl=0, bool vis=true);
 		Platform();
-
-		/*!
-	     * \brief Destructeur
-	     *
-	     * Destructeur de la classe Platform
-	     */
 		~Platform();
 
-		/*!
-	     * \brief Debug
-	     *
-	     * Affiche des informations sur l'objet.
-	     * \param os : Flux sur lequel afficher.
-	     */
+		inline int getWalkline() const {return walkline;};
+		inline bool getVisibility() const {return visibility;};
+		inline void setVisibility(bool b) {visibility = b;};
+
 		void print(ostream& os) const;
-
-		/*!
-	     * \brief Retourne la hauteur du sol de la plate-forme.
-	     */
-		int getWalkline();
-
-		/*!
-	     * \brief Définit si la plate-forme est visible ou non.
-	     */
-		void setVisible(bool b);
-
 };
 
 

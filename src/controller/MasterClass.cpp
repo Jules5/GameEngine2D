@@ -56,9 +56,8 @@ void MasterClass::playApp()
 
         // cout << getFramerate(&clock) << "FPS" << endl;
 
-        game.update(clock.restart().asMilliseconds());
         window.clear();
-        game.display();
+        game.update(clock.restart().asMilliseconds());
         window.display();
     }
 
@@ -80,7 +79,7 @@ void MasterClass::applyConfig()
 }
 
 
-float MasterClass::getFramerate(Clock* c)
+float MasterClass::getFramerate(Clock* c) const
 {
   return 1/(c->getElapsedTime().asSeconds());
 }

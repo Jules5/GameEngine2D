@@ -1,29 +1,30 @@
-#include "model/ObjetPhysique.h"
+#include "model/PhysicObject.h"
 
-const float ObjetPhysique::GRAVITY = 0.0098;
+const float PhysicObject::GRAVITY = 0.0098;
 
 
-ObjetPhysique::ObjetPhysique(Float2 pos, Float2 siz, unsigned int m, float elas)
+PhysicObject::PhysicObject(Float2 pos, Float2 siz, unsigned int m, float elas)
 :position(pos),size(siz),mass(m),elasticity(elas)
 {
     init();
 }
 
 
-ObjetPhysique::ObjetPhysique()
+PhysicObject::PhysicObject()
 {
     init();
-	position.x = 0; position.y = 0;
-	size.x = 0;     size.y = 0;
+	position = Int2(0,0);
+	size = Int2(0,0);
     mass = 0;
+    elasticity = 0;
 }
 
 
-ObjetPhysique::~ObjetPhysique()
+PhysicObject::~PhysicObject()
 {}
 
 
-void ObjetPhysique::init()
+void PhysicObject::init()
 {
     movement.x = 0; movement.y = 0;
 
@@ -32,7 +33,7 @@ void ObjetPhysique::init()
 }
 
 
-void ObjetPhysique::animate(int dt)
+void PhysicObject::animate(int dt)
 {
     // Mouvements
     float dx = (dt*movement.x*mass)/1000;
@@ -52,37 +53,16 @@ void ObjetPhysique::animate(int dt)
 }
 
 
-void ObjetPhysique::setPosition(Float2 pos)
-{
-    position.x = pos.x;
-    position.y = pos.y;
-}
-
-
-void ObjetPhysique::setSize(Float2 siz)
-{
-    size.x = siz.x;
-    size.y = siz.y;
-}
-
-
-
-void ObjetPhysique::setMass(int m)
-{
-    mass = m;
-}
-
-
-void ObjetPhysique::addMovement(Float2 v)
+void PhysicObject::addMovement(Float2 v)
 {
 	movement.x += v.x;
 	movement.y += v.y;
 }
 
 
-void ObjetPhysique::print(ostream& os) const  
+void PhysicObject::print(ostream& os) const  
 {  
-    os << "===ObjetPhysique===" << endl;
+    os << "===PhysicObject===" << endl;
     os << "=== Position  : " << position << endl;  
     os << "=== Taille    : " << size << endl;  
     os << "=== Masse     : " << mass << endl;  
@@ -91,7 +71,7 @@ void ObjetPhysique::print(ostream& os) const
 } 
 
 
-void ObjetPhysique::checkCollisions(ObjetPhysique* obj)
+void PhysicObject::checkCollisions(PhysicObject* obj)
 {
     float eps = 4;
 
@@ -116,7 +96,7 @@ void ObjetPhysique::checkCollisions(ObjetPhysique* obj)
 }
 
 
-ostream& operator << (ostream& os, const ObjetPhysique& obj)  
+ostream& operator << (ostream& os, const PhysicObject& obj)  
 {  
     obj.print(os);  
     return os;  

@@ -2,7 +2,7 @@
 
 
 PlatformView::PlatformView()
-:target(NULL)
+:PhysicObjectView()
 {
 	init();
 }
@@ -10,7 +10,7 @@ PlatformView::PlatformView()
 
 
 PlatformView::PlatformView(Platform* p)
-:target(p)
+:PhysicObjectView(p)
 {
 	init();
 }
@@ -28,16 +28,13 @@ void PlatformView::init()
 
 
 
-void PlatformView::update()
-{
-	body.setSize(Vector2f(target->size.x,target->size.y));
-	body.setPosition(Vector2f(target->position.x,target->position.y));
-}
 
 
-void PlatformView::display(RenderWindow* window)
+void PlatformView::update(RenderWindow* window)
 {
-	if(target->visible && target->size.y!=0) // On affiche que si la plateforme a une hauteur non nulle
-		window->draw(body);
+	PhysicObjectView::update(window);
+
+	//if(target->visible && target->size.y!=0) // On affiche que si la plateforme a une hauteur non nulle
+	//	window->draw(body);
 }
 

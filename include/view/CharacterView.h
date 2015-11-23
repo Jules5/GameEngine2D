@@ -11,30 +11,27 @@
 
 #include <model/Character.h>
 
+#include <view/PhysicObjectView.h>
+
 using namespace std;
 using namespace sf;
 
 
 
-class CharacterView
+class CharacterView : public PhysicObjectView
 {
+	// Attributes
+	private :
 
+
+	// Methods
 	public :
-
-		Character* target;
-		RectangleShape body; 
-
-
-	public :
-
 		CharacterView();
 		CharacterView(Character*);
 		~CharacterView();
 
 		void init();
-
-		void update();
-		void display(RenderWindow* window);
+		void update(RenderWindow* window);
 
 };
 
