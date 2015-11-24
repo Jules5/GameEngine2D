@@ -46,6 +46,13 @@ Float2::Float2(const Int2& u)
 Float2::~Float2()
 {}
 
+Float2& Float2::operator +=(const Float2& f)
+{
+	x += f.x;
+	y += f.y;
+	return *this;
+}
+
 
 
 /*============== CLASSE BOOL2 ==============*/

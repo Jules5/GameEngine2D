@@ -20,6 +20,7 @@ EnvironmentView::~EnvironmentView()
 
 void EnvironmentView::update(RenderWindow* window)
 {
+	// Récupération des éléments de l'environnement
 	list<Decor>* decors = target->getDecors();
 	list<Platform>* platforms = target->getPlatforms();
 

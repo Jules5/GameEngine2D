@@ -11,7 +11,7 @@ MasterClass::MasterClass()
   config.difficulty = Config::NORMAL;
   config.fullscreen = true;
   config.resolution = VideoMode::getDesktopMode();
-  config.vsync = true;
+  config.vsync = false;
 
   applyConfig();
 
@@ -43,14 +43,16 @@ void MasterClass::playApp()
                		play = false;
                		break;
 
-               	case Event::KeyPressed :
-               		switch(event.key.code)
-               		{
-               			case Keyboard::Escape :
-               				play = false;
-               				break;
-               		}
-               		break;
+              case Event::KeyReleased :
+                  game.keyReleased(event.key.code);
+                  break;
+
+             	case Event::KeyPressed :
+             		if(event.key.code == Keyboard::Escape)
+                  play = false;
+                else
+                  game.keyPressed(event.key.code);
+             		break;
             } 
         }
 
@@ -70,7 +72,8 @@ void MasterClass::playApp()
 void MasterClass::applyConfig()
 {
 	if(config.fullscreen)
-		window.create(VideoMode::getDesktopMode(), title, Style::Fullscreen);
+    //window.create(VideoMode::getDesktopMode(), title, Style::Fullscreen);
+		window.create(VideoMode::getDesktopMode(), title, Style::None);
 	else
 		window.create(config.resolution, title, Style::Default);
 

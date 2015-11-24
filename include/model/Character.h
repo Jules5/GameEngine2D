@@ -7,6 +7,7 @@
 // #include <tools/tools.h>
 
 #include <model/PhysicObject.h>
+#include <model/Platform.h>
 
 using namespace std;
 
@@ -15,14 +16,11 @@ class Character : public PhysicObject
 {
 	// Enumerations
 	public :
-		enum CharacterWay {LEFT, RIGHT};
-		enum CharacterState {IDLE, RUN};
-
 
 	// Attributes
 	private :
-		CharacterWay way;
-		CharacterState state;
+		bool left;
+		bool running;
 
 
 	// Methods
@@ -32,7 +30,10 @@ class Character : public PhysicObject
 
 		void init();
 		virtual void animate(int dt);
-		void walk(CharacterWay);
+		void run(bool l);
+		void stop();
+		void jump(int j=3);
+		void checkCollisions(const Platform*);
 };
 
 

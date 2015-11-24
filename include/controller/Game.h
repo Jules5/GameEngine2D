@@ -45,6 +45,8 @@ class Game
 
 		void init();
 		void update(int dt);
+		void keyPressed(Keyboard::Key code);
+		void keyReleased(Keyboard::Key code);
 		void checkCollisions();
 
 		void setConfig(Config* c);

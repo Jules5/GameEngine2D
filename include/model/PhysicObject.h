@@ -2,25 +2,34 @@
 #define OBJETPHYSIQUE_H
 
 #include <iostream>
+#include <algorithm>
 #include <cmath>
+
 #include <tools/tools.h>
 
 using namespace std;
+
+class Platform;
+
 
 
 class PhysicObject
 {
 	public :
-		friend ostream& operator << (ostream& os, const PhysicObject& obj);
+		enum Directions {TOP, RIGHT, BOTTOM, LEFT, NB_DIRECTIONS, NONE};
 		static const float GRAVITY;
+		friend ostream& operator << (ostream& os, const PhysicObject& obj);
+
 
 	// Attributes
 	protected :
 		Float2 position;
 		Float2 size; 
 		Float2 movement; 
-		unsigned int mass; 
+		int mass; 
 		float elasticity;
+		bool ground;
+		float frottements;
 
 
 	// Methods
@@ -32,7 +41,8 @@ class PhysicObject
 		void init();
 		virtual void animate(int dt);
 		void addMovement(Float2 v);
-		void checkCollisions(PhysicObject*);
+		Directions checkIntersect(const PhysicObject*, int delta=0);
+		void checkCollisions(const Platform*);
 
 		inline Float2 getPosition() const {return position;};
 		inline Float2 getSize() const     {return size;}    ;

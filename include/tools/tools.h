@@ -86,16 +86,14 @@ class Float2 {
 		Float2(const Int2& u); /*!< \brief Construction à partir d'un Int2 */
 		~Float2(); /*!< \brief Destructeur */
 
-		/*!\relates operator <<
-		 * \brief Pour afficher les information d'un objet dans le flux standard.
-		 */
+		Float2& operator +=(const Float2&);
+
 		inline friend std::ostream& operator << (std::ostream& os, const Float2& i)
 		{
 			os << "(" << i.x << "," << i.y << ")";
 			return os; 
 		};  
 
-		
 		// Seulement pour SFML
 		inline const Vector2f vector() const
 		{

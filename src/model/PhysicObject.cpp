@@ -1,4 +1,5 @@
-#include "model/PhysicObject.h"
+﻿#include <model/PhysicObject.h>
+#include <model/Platform.h>
 
 const float PhysicObject::GRAVITY = 0.0098;
 
@@ -26,6 +27,8 @@ PhysicObject::~PhysicObject()
 
 void PhysicObject::init()
 {
+    frottements = 0.9;
+    ground = true;
     movement.x = 0; movement.y = 0;
 
     if(elasticity < 0) elasticity = 0;
@@ -47,16 +50,20 @@ void PhysicObject::animate(int dt)
     // Gravité
     if(mass > 0)
     {
+        ground = false;
         float dy = dt*GRAVITY*mass;
         movement.y += dy;
     }
+
+    // Arret
+    if(movement.x < 1 && movement.x > -1)
+        movement.x = 0;
 }
 
 
 void PhysicObject::addMovement(Float2 v)
 {
-	movement.x += v.x;
-	movement.y += v.y;
+	movement += v;
 }
 
 
@@ -71,17 +78,54 @@ void PhysicObject::print(ostream& os) const
 } 
 
 
-void PhysicObject::checkCollisions(PhysicObject* obj)
+
+
+PhysicObject::Directions PhysicObject::checkIntersect(const PhysicObject* obj, int eps)
 {
-    float eps = 4;
+    if(position.y + size.y > obj->position.y - eps 
+    && position.y < obj->position.y + obj->size.y + eps
+    && position.x + size.x > obj->position.x - eps
+    && position.x < obj->position.x+obj->size.x + eps)
+    {
+        int offset[NB_DIRECTIONS];
+        offset[LEFT]   = obj->position.x + obj->size.x - position.x + eps;
+        offset[RIGHT]  = position.x + size.x - obj->position.x + eps;
+        offset[TOP]    = obj->position.y + obj->size.y - position.y + eps;
+        offset[BOTTOM] = position.y + size.y - obj->position.y + eps;
 
-    // Je triche et je checke que les collisions avec le sol, faut améliorer l'implémentation
+        int min = -1;
+        int ind = NONE;
 
-    // Si on chute et qu'on percute le sol
-    if(movement.y > 0 && position.y + size.y > obj->position.y - eps && position.y < obj->position.y + obj->size.y + eps)
+        for(int i=0; i<NB_DIRECTIONS; ++i)
+            if(offset[i] >= 0 && (ind == NONE || offset[i] < min))
+            {
+                ind = i; 
+                min = offset[i];
+            }
+
+        return Directions(ind);
+    }
+
+    return NONE;
+}
+
+
+
+
+void PhysicObject::checkCollisions(const Platform* obj)
+{
+    float eps = 5;
+    Float2 obj_pos = obj->getPosition();
+    Float2 obj_siz = obj->getSize();
+
+    if(!ground && checkIntersect(obj,eps) != NONE
+    && position.x + size.x > obj_pos.x + size.x/3
+    && position.x < obj_pos.x + obj_siz.x - size.x/3
+    )
     {
         // On plaque l'objet sur le sol
-        position.y = obj->position.y - size.y;
+        ground = true;
+        position.y = obj_pos.y - size.y;
 
         // Rebond (ou pas)
         if(movement.y > mass * 2)
@@ -91,9 +135,12 @@ void PhysicObject::checkCollisions(PhysicObject* obj)
 
         // Frottements avec le sol
         if(abs(movement.x) > 0)
-            movement.x *= 0.9;
+            movement.x *= frottements;
     }
 }
+
+
+
 
 
 ostream& operator << (ostream& os, const PhysicObject& obj)  
