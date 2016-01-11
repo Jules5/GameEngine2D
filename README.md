@@ -18,3 +18,7 @@
 * make install : install dependencies
 * make clean : clean temporaries binaries
 * make init : build binaries directory
+
+## TODO
+
+* Amélioration architecture de la gestion des collisions

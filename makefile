@@ -46,7 +46,7 @@ $(PATH_OBJ)/%.o: $(PATH_SRC)/%.cpp
 	@$(COMPILO) $(OPTION) -o $@ -c $< -I$(PATH_INC)
 
 init :
-	mkdir -p obj obj/model obj/controller obj/view obj/tools
+	mkdir -p obj obj/agent obj/control obj/environment obj/level obj/physic obj/tools
 
 clean :
 	@echo "Suppression des .o et fichiers temporaires"

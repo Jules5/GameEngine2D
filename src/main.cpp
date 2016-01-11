@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-#include <controller/MasterClass.h>
+#include <control/MasterClass.h>
 
 
 using namespace std;
